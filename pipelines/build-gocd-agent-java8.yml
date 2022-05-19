@@ -2,11 +2,17 @@ format_version: 3
 pipelines:
   build_and_publish_image:
     group: GOCD-Agents
+    materials:
+      gitrepo:
+        git: https://github.com/christi4n/gocd-agents.git
+        branch: master
     label_template: ${COUNT}
     lock_behavior: unlockWhenFinished
     display_order: 1
     ## Define the environment variables
     environment_variables:
+      DOCKERHUB_USERNAME: amarissuisse
+      IMAGE_NAME: gocd-agent-java8
     ## Define the stages
     stages:
     - build_and_publish_image:
@@ -25,6 +31,6 @@ pipelines:
             - exec:
                 arguments:
                 - -c
-                - docker build -t $DOCKERHUB_USERNAME/gocd-java-agent:$GO_PIPELINE_LABEL . -f ../java/v8/Dockerfile.agent
+                - docker build -t $DOCKERHUB_USERNAME/gocd-agent-java8:$GO_PIPELINE_LABEL . -f ../java/v8/Dockerfile.agent
                 command: /bin/bash
                 run_if: passed
