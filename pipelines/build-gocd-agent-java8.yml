@@ -25,13 +25,11 @@ pipelines:
           jobs:
             build_image:
               timeout: 0
-              elastic_profile:
-                name: k8-cluster-profile
-                elastic_profile_id: k8-cluster-profile
+              elastic_profile_id: k8-cluster-profile
               tasks:
                 - exec:
                   command: /bin/bash
+                  run_if: passed
                   arguments:
                     - -c
                     - docker build -t $DOCKERHUB_USERNAME/gocd-agent-java8:$GO_PIPELINE_LABEL . -f ../java/v8/Dockerfile.agent
-                  run_if: passed
