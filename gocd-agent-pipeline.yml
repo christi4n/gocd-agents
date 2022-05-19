@@ -52,4 +52,4 @@ pipelines:
                 command: /bin/sh
                 arguments:
                   - -c
-                  - docker build -t amarissuisse/gocd-agent-java8:$GO_PIPELINE_LABEL . -f Dockerfile.agent
+                  - docker build -t amarissuisse/gocd-agent-java8:$GO_PIPELINE_LABEL . -f java/v8/Dockerfile.agent
