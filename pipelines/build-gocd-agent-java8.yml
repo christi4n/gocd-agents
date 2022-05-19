@@ -1,6 +1,6 @@
 format_version: 3
 pipelines:
-  build_and_publish_image:
+  Build_And_Publish_Image:
     group: GOCD-Agents
     label_template: ${COUNT}
     lock_behavior: unlockWhenFinished
@@ -15,14 +15,14 @@ pipelines:
       DOCKERHUB_USERNAME: "amarissuisse"
       IMAGE_NAME: "gocd-agent-java8"
     stages:
-      - build_and_publish_image:
+      - Build_And_Publish:
         clean_workspace: false
-        fetch_materials: false
+        fetch_materials: true
         keep_artifacts: false
         approval:
           type: success
         jobs:
-          build_image:
+          Build_Image:
             elastic_profile_id: demo-app
             timeout: 0
             artifacts:
