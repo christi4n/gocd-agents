@@ -1,5 +1,4 @@
 format_version: 3
-
 pipelines:
   build_and_publish_image:
     group: GOCD-Agents
@@ -16,28 +15,32 @@ pipelines:
       DOCKERHUB_USERNAME: "amarissuisse"
       IMAGE_NAME: "gocd-agent-java8"
     stages:
-    - build_and_publish_image:
-      clean_workspace: false
-      fetch_materials: false
-      keep_artifacts: false
-      approval:
-        type: success
-      jobs:
-        build_image:
-          timeout: 0
-          elastic_profile_id: demo-app
-          artifacts:
-          - external:
-            id: gocd-agent-java8
-            store_id: docker_hub
-            configuration:
-              option:
-                Image: ${DOCKERHUB_USERNAME}/${IMAGE_NAME}
-                Tag: ${GO_PIPELINE_LABEL}
-          
-          tasks:
-            - exec:
-              run_if: passed
-              command: bash
-              arguments:
-              - ./scripts/commit/build.sh
+      - build_and_publish_image:
+        clean_workspace: false
+        fetch_materials: false
+        keep_artifacts: false
+        approval:
+          type: success
+        jobs:
+          build_image:
+            timeout: 0
+            artifacts:
+              - external:
+                id: gocd-agent-java8
+                store_id: docker_hub
+                configuration:
+                  option:
+                    Image: ${DOCKERHUB_USERNAME}/${IMAGE_NAME}
+                    Tag: ${GO_PIPELINE_LABEL}
+            tasks:
+              - exec:
+                run_if: passed
+                command: bash
+                arguments:
+                - ./scripts/commit/build.sh
+              - exec:
+                run_if: passed
+                command: bash
+                arguments:
+                - "-c"
+                - "docker build -t $DOCKERHUB_USERNAME/gocd-agent-java8:$GO_PIPELINE_LABEL . -f Dockerfile.agent"
