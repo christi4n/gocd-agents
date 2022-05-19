@@ -23,6 +23,7 @@ pipelines:
           type: success
         jobs:
           build_image:
+            elastic_profile_id: demo-app
             timeout: 0
             artifacts:
               - external:
