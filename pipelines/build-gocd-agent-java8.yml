@@ -2,6 +2,8 @@ format_version: 3
 pipelines:
   build_and_publish_image:
     group: GOCD-Agents
+    ## Linked to $GO_PIPELINE_LABEL
+    label_template: ${COUNT}
     materials:
       gitrepo:
         git: https://github.com/christi4n/gocd-agents.git
@@ -27,12 +29,9 @@ pipelines:
             name: k8-cluster-profile
             elastic_profile_id: k8-cluster-profile
             tasks:
-            - copy_resource:
-                source: ../java/v8/Dockerfile.agent
-                destination: Dockerfile.agent
             - exec:
                 arguments:
                 - -c
-                - docker build -t $DOCKERHUB_USERNAME/gocd-agent-java8:$GO_PIPELINE_LABEL . -f Dockerfile.agent
+                - docker build -t $DOCKERHUB_USERNAME/gocd-agent-java8:$GO_PIPELINE_LABEL . -f ../java/v8/Dockerfile.agent
                 command: /bin/bash
                 run_if: passed
