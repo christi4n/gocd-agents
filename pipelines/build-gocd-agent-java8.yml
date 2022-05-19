@@ -1,7 +1,7 @@
 format_version: 3
 pipelines:
   Build_And_Publish_Image:
-    group: GOCD-Agents
+    group: GocdAgents
     label_template: ${COUNT}
     lock_behavior: unlockWhenFinished
     display_order: 1
@@ -36,12 +36,12 @@ pipelines:
             tasks:
               - exec:
                 run_if: passed
-                command: bash
+                command: /bin/sh
                 arguments:
                 - ./scripts/commit/build.sh
               - exec:
                 run_if: passed
-                command: bash
+                command: /bin/sh
                 arguments:
                 - "-c"
                 - "docker build -t amarissuisse/gocd-agent-java8:$GO_PIPELINE_LABEL . -f Dockerfile.agent"
