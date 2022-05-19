@@ -12,36 +12,14 @@ pipelines:
         auto_update: true
         branch: master
     environment_variables:
-      DOCKERHUB_USERNAME: "amarissuisse"
-      IMAGE_NAME: "gocd-agent-java8"
+      DOCKERHUB_USERNAME: amarissuisse
+      IMAGE_NAME: gocd-agent-java8
     stages:
       - Build_And_Publish:
-        clean_workspace: false
-        fetch_materials: true
-        keep_artifacts: false
         jobs:
           Build_Image:
-            elastic_profile_id: demo-app
-            timeout: 0
-            artifacts:
-              - external:
-                id: gocd-agent-java8
-                store_id: docker_hub
-                configuration:
-                  option:
-                    Image: amarissuisse/gocd-agent-java8
-                    Tag: ${GO_PIPELINE_LABEL}
             tasks:
               - exec:
-                command: /bin/sh
-                arguments:
-                - "ls"
-              - exec:
-                command: /bin/sh
-                arguments:
-                - "./scripts/commit/build.sh"
-              - exec:
-                command: /bin/sh
-                arguments:
-                - "-c"
-                - "docker build -t amarissuisse/gocd-agent-java8:$GO_PIPELINE_LABEL . -f Dockerfile.agent"
+                  command: echo
+                  arguments:
+                    - "$DOCKERHUB_USERNAME"
