@@ -28,10 +28,10 @@ pipelines:
               elastic_profile:
                 name: k8-cluster-profile
                 elastic_profile_id: k8-cluster-profile
-                tasks:
-                  - exec:
-                      arguments:
-                      - -c
-                      - docker build -t $DOCKERHUB_USERNAME/gocd-agent-java8:$GO_PIPELINE_LABEL . -f ../java/v8/Dockerfile.agent
-                      command: /bin/bash
-                      run_if: passed
+              tasks:
+                - exec:
+                  arguments:
+                    - -c
+                    - docker build -t $DOCKERHUB_USERNAME/gocd-agent-java8:$GO_PIPELINE_LABEL . -f ../java/v8/Dockerfile.agent
+                  command: /bin/bash
+                  run_if: passed
