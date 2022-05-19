@@ -13,8 +13,8 @@ pipelines:
         branch: master
         name: SourceCodeRepo
     environment_variables:
-      DOCKERHUB_USERNAME: amarissuisse
-      IMAGE_NAME: gocd-agent-java8
+      DOCKERHUB_USERNAME: "amarissuisse"
+      IMAGE_NAME: "gocd-agent-java8"
     stages:
       - build_and_publish_image:
           clean_workspace: true
@@ -30,8 +30,8 @@ pipelines:
                 elastic_profile_id: k8-cluster-profile
               tasks:
                 - exec:
+                  command: /bin/bash
                   arguments:
                     - -c
                     - docker build -t $DOCKERHUB_USERNAME/gocd-agent-java8:$GO_PIPELINE_LABEL . -f ../java/v8/Dockerfile.agent
-                  command: /bin/bash
                   run_if: passed
