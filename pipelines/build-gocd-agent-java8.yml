@@ -1,0 +1,30 @@
+format_version: 3
+pipelines:
+  build_and_publish_image:
+    group: GOCD-Agents
+    label_template: ${COUNT}
+    lock_behavior: unlockWhenFinished
+    display_order: 1
+    ## Define the environment variables
+    environment_variables:
+    ## Define the stages
+    stages:
+    - build_and_publish_image:
+        fetch_materials: false
+        keep_artifacts: true
+        clean_workspace: false
+        approval:
+          type: success
+        jobs:
+          build_image:
+          timeout: 0
+          elastic_profile:
+            name: k8-cluster-profile
+            elastic_profile_id: k8-cluster-profile
+            tasks:
+            - exec:
+                arguments:
+                - -c
+                - docker build -t $DOCKERHUB_USERNAME/gocd-java-agent:$GO_PIPELINE_LABEL . -f ../java/v8/Dockerfile.agent
+                command: /bin/bash
+                run_if: passed
