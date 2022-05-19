@@ -6,7 +6,6 @@ pipelines:
       gitrepo:
         git: https://github.com/christi4n/gocd-agents.git
         branch: master
-    label_template: ${COUNT}
     lock_behavior: unlockWhenFinished
     display_order: 1
     ## Define the environment variables
