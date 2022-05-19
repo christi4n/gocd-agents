@@ -1,4 +1,5 @@
 format_version: 3
+
 pipelines:
   build_and_publish_image:
     group: GOCD-Agents
@@ -11,7 +12,6 @@ pipelines:
         shallow_clone: true
         auto_update: true
         branch: master
-        name: SourceCodeRepo
     environment_variables:
       DOCKERHUB_USERNAME: "amarissuisse"
       IMAGE_NAME: "gocd-agent-java8"
@@ -37,8 +37,7 @@ pipelines:
           
           tasks:
             - exec:
-                command: /bin/bash
-                arguments:
-                - -c
-                - docker build -t $DOCKERHUB_USERNAME/gocd-agent-java8:$GO_PIPELINE_LABEL . -f Dockerfile.agent
-                run_if: passed
+              run_if: passed
+              command: bash
+              arguments:
+              - ./scripts/commit/build.sh
