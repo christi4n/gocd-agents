@@ -31,7 +31,7 @@ pipelines:
                 store_id: docker_hub
                 configuration:
                   option:
-                    Image: ${DOCKERHUB_USERNAME}/${IMAGE_NAME}
+                    Image: amarissuisse/gocd-agent-java8
                     Tag: ${GO_PIPELINE_LABEL}
             tasks:
               - exec:
@@ -44,4 +44,4 @@ pipelines:
                 command: bash
                 arguments:
                 - "-c"
-                - "docker build -t $DOCKERHUB_USERNAME/gocd-agent-java8:$GO_PIPELINE_LABEL . -f Dockerfile.agent"
+                - "docker build -t amarissuisse/gocd-agent-java8:$GO_PIPELINE_LABEL . -f Dockerfile.agent"
