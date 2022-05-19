@@ -6,7 +6,7 @@ pipelines:
     lock_behavior: unlockWhenFinished
     display_order: 1
     materials:
-      SourceCodeRepo:
+      git:
         git: https://github.com/christi4n/gocd-agents.git
         shallow_clone: true
         auto_update: true
