@@ -8,48 +8,20 @@ pipelines:
     materials:
       git:
         git: https://github.com/christi4n/gocd-agents.git
-        shallow_clone: true
-        auto_update: true
-        branch: master
-    environment_variables:
-      DOCKERHUB_USERNAME: amarissuisse
-      IMAGE_NAME: gocd-agent-java8
+        branch: develop
     stages:
       - Build_And_Publish:
         clean_workspace: false
         fetch_materials: true
         keep_artifacts: false
-        approval:
-          type: success
         jobs:
           Build_Image:
-            elastic_profile_id: demo-app
-            timeout: 0
-            artifacts:
-              - external:
-                id: gocd-agent-java8
-                store_id: docker_hub
-                configuration:
-                  option:
-                    Image: amarissuisse/gocd-agent-java8
-                    Tag: ${GO_PIPELINE_LABEL}
             tasks:
-              - exec:
-                  command: echo
-                  arguments:
-                    - "$DOCKERHUB_USERNAME"
               - exec:
                 command: /bin/sh
                 arguments:
                   - "ls"
               - exec:
-                run_if: passed
                 command: /bin/sh
                 arguments:
                   - ./scripts/commit/build.sh
-              - exec:
-                run_if: passed
-                command: /bin/sh
-                arguments:
-                  - -c
-                  - docker build -t amarissuisse/gocd-agent-java8:$GO_PIPELINE_LABEL . -f java/v8/Dockerfile.agent
