@@ -16,6 +16,7 @@ pipelines:
           clean_workspace: true
           jobs:
             Build:
+              elastic_profile_id: demo-app
               tasks:
                 - exec:
                     run_if: passed
@@ -25,6 +26,7 @@ pipelines:
       - Unit_Tests:
           jobs:
             Run_Unit_Tests:
+              elastic_profile_id: demo-app
               tasks:
                 - exec:
                     run_if: passed
@@ -34,6 +36,7 @@ pipelines:
       - Build_Docker_Image:
           jobs:
             Build_Image:
+              elastic_profile_id: demo-app
               tasks:
                 - exec:
                     run_if: passed
@@ -48,6 +51,7 @@ pipelines:
       - Push_To_Registry:
           jobs:
             Push:
+              elastic_profile_id: demo-app
               tasks:
                 - exec:
                     run_if: passed
