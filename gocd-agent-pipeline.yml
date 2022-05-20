@@ -1,19 +1,13 @@
-format_version: 3
+format_version: 2
 pipelines:
   Build_And_Publish_Image:
     group: GocdAgents
-    label_template: ${COUNT}
-    lock_behavior: unlockWhenFinished
-    display_order: 1
     materials:
       git:
         git: https://github.com/christi4n/gocd-agents.git
         branch: develop
     stages:
       - Build_And_Publish:
-        clean_workspace: false
-        fetch_materials: true
-        keep_artifacts: false
         jobs:
           Build_Image:
             tasks:
