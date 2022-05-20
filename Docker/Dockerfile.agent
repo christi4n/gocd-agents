@@ -2,18 +2,18 @@ FROM gocd/gocd-agent-docker-dind:v22.1.0
 
 USER root
 
-ARG USER=default
-ENV HOME /home/$USER
+ARG NON_ROOT_USER=default
+ENV HOME /home/$NON_ROOT_USER
 
 # install sudo as root
 RUN apk add --update sudo
 
 # add new user
-RUN adduser -D $USER \
-        && echo "$USER ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$USER \
-        && chmod 0440 /etc/sudoers.d/$USER
+RUN adduser -D $NON_ROOT_USER \
+        && echo "$NON_ROOT_USER ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$NON_ROOT_USER \
+        && chmod 0440 /etc/sudoers.d/$NON_ROOT_USER
 
-USER $USER
+USER $NON_ROOT_USER
 WORKDIR $HOME
 
 # files in /home/$USER to be owned by $USER
