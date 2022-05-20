@@ -1,5 +1,7 @@
 FROM gocd/gocd-agent-docker-dind:v22.1.0
 
+USER root
+
 ARG USER=default
 ENV HOME /home/$USER
 
