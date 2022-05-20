@@ -42,13 +42,15 @@ pipelines:
               elastic_profile_id: demo-app
               tasks:
                 - exec:
-                    command: echo
+                    command: /bin/sh
                     arguments:
-                    - "$DOCKERHUB_USERNAME"
+                    - "-c"
+                    - "echo ${DOCKERHUB_USERNAME}/${IMAGE_NAME}:v`git rev-list HEAD --count`.0 > image_ref"
                 - exec:
-                    command: echo
+                    command: /bin/sh
                     arguments:
-                    - "$IMAGE_NAME"
+                    - "-c"
+                    - "docker build -t `cat image_ref` . -f Dockerfile.agent"
                 - exec:
                     run_if: passed
                     command: /bin/sh
