@@ -44,20 +44,18 @@ pipelines:
                 - exec:
                     command: /bin/sh
                     arguments:
-                    - "-c"
-                    - "echo ${DOCKERHUB_USERNAME}/${IMAGE_NAME}:v`git rev-list HEAD --count`.0 > image_ref"
+                    - -c
+                    - echo ${DOCKERHUB_USERNAME}/${IMAGE_NAME}:v`git rev-list HEAD --count`.0 > image_ref
                 - exec:
                     command: /bin/sh
                     arguments:
-                    - "-c"
-                    - "docker build -t `cat image_ref` . -f Dockerfile.agent"
+                    - -c
+                    - docker build -t `cat image_ref` . -f Dockerfile.agent
                 - exec:
                     run_if: passed
                     command: /bin/sh
                     arguments:
                     - ./scripts/commit/docker-build.sh
-                    - "${DOCKERHUB_USERNAME}"
-                    - "${IMAGE_NAME}"
                 - exec:
                     run_if: passed
                     command: /bin/sh
