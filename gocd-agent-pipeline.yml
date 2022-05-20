@@ -2,10 +2,15 @@ format_version: 2
 pipelines:
   Backend_CommitPhase:
     group: GocdAgents
+    label_template: ${COUNT}
+    lock_behavior: unlockWhenFinished
+    display_order: 1
     materials:
       backend:
         git: https://github.com/christi4n/gocd-agents.git
         branch: develop
+        shallow_clone: true
+        auto_update: true
     stages:
       - Build:
           clean_workspace: true
