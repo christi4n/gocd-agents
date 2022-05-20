@@ -50,7 +50,7 @@ pipelines:
                     command: /bin/sh
                     arguments:
                     - -c
-                    - docker build -t `cat image_ref` . -f Dockerfile.agent
+                    - docker build -t `cat image_ref` . -f ./Docker/Dockerfile.agent
                 - exec:
                     run_if: passed
                     command: /bin/sh
