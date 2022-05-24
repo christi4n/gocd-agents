@@ -19,7 +19,7 @@ pipelines:
           clean_workspace: true
           jobs:
             Build:
-              elastic_profile_id: demo-app
+              elastic_profile_id: custom-elastic-agent-java8
               tasks:
                 - exec:
                     run_if: passed
