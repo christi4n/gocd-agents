@@ -2,6 +2,6 @@
 
 echo "=========== Tag Docker Image: Start =============="
 
-sleep .5
+snik test `cat image_ref`
 
 echo "=========== Tag Docker Image: Done  =============="

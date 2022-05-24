@@ -8,6 +8,17 @@ ENV HOME /home/$NON_ROOT_USER
 # install sudo as root
 RUN apk add --update sudo
 
+#  Install some depencies
+RUN apk add --no-cache maven
+RUN apk add --no-cache openjdk8
+RUN apk add --no-cache terraform
+RUN apk add --no-cache python3 py-pip
+
+# install curl and get Snyk binary for Alpine distribution
+RUN apk add --no-cache curl
+RUN curl -o snyk https://static.snyk.io/cli/latest/snyk-alpine
+RUN chmod +x ./snyk
+
 # add new user
 RUN adduser -D $NON_ROOT_USER \
         && echo "$NON_ROOT_USER ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$NON_ROOT_USER \
@@ -20,5 +31,4 @@ WORKDIR $HOME
 # docker has --chown flag for COPY, but it does not expand ENV so we fallback to:
 # COPY src src
 # RUN sudo chown -R $USER:$USER $HOME
-
 CMD echo "User $(whoami) running from $PWD with premissions: $(sudo -l)"
